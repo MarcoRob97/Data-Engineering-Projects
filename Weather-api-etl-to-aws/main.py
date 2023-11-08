@@ -1,26 +1,21 @@
+from airflow import DAG
+from datetime import timedelta, datetime
+from airflow.providers.http.sensors.http import HttpSensor
 import json
-from datetime import datetime
+from airflow.providers.http.operators.http import SimpleHttpOperator
+from airflow.operators.python import PythonOperator
 import pandas as pd
-import requests
 
-city_name = "Portland"
-base_url = "https://api.openweathermap.org/data/2.5/weather?q="
 
-with open("credentials.txt", 'r') as f:
-    api_key = f.read()
 
-full_url = base_url + city_name + "&APPID=" + api_key
 
 def kelvin_to_fahrenheit(temp_in_kelvin):
     temp_in_fahrenheit = (temp_in_kelvin - 273.15) * (9/5) + 32
     return temp_in_fahrenheit
 
-def etl_weather_data(url):
-    r = requests.get(url)
-    data = r.json()
-    # print(data)
 
-
+def transform_load_data(task_instance):
+    data = task_instance.xcom_pull(task_ids="extract_weather_data")
     city = data["name"]
     weather_description = data["weather"][0]['description']
     temp_farenheit = kelvin_to_fahrenheit(data["main"]["temp"])
@@ -47,12 +42,58 @@ def etl_weather_data(url):
                         "Sunrise (Local Time)":sunrise_time,
                         "Sunset (Local Time)": sunset_time                        
                         }
-
     transformed_data_list = [transformed_data]
     df_data = pd.DataFrame(transformed_data_list)
-    # print(df_data)
+    aws_credentials = {"key": "xxxxxxxxx", "secret": "xxxxxxxxxx", "token": "xxxxxxxxxxxxxx"}
 
-    df_data.to_csv("current_weather_data_portland.csv", index = False)
+    now = datetime.now()
+    dt_string = now.strftime("%d%m%Y%H%M%S")
+    dt_string = 'current_weather_data_portland_' + dt_string
+    df_data.to_csv(f"s3://myproject-weatherapi-marc/{dt_string}.csv", index=False, storage_options=aws_credentials)
 
-if __name__ == '__main__':
-    etl_weather_data(full_url)
+
+
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'start_date': datetime(2023, 1, 8),
+    'email': ['myemail@domain.com'],
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 2,
+    'retry_delay': timedelta(minutes=2)
+}
+
+
+
+with DAG('weather_dag',
+        default_args=default_args,
+        schedule_interval = '@daily',
+        catchup=False) as dag:
+
+
+        is_weather_api_ready = HttpSensor(
+        task_id ='is_weather_api_ready',
+        http_conn_id='weathermap_api',
+        endpoint='/data/2.5/weather?q=Houston&APPID=a23ba13537516d4700348b8bd6bfebcf'
+        )
+
+
+        extract_weather_data = SimpleHttpOperator(
+        task_id = 'extract_weather_data',
+        http_conn_id = 'weathermap_api',
+        endpoint='/data/2.5/weather?q=Houston&APPID=a23ba13537516d4700348b8bd6bfebcf',
+        method = 'GET',
+        response_filter= lambda r: json.loads(r.text),
+        log_response=True
+        )
+
+        transform_load_weather_data = PythonOperator(
+        task_id= 'transform_load_weather_data',
+        python_callable=transform_load_data
+        )
+
+
+
+
+        is_weather_api_ready >> extract_weather_data >> transform_load_weather_data
