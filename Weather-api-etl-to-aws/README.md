@@ -33,6 +33,6 @@ Before using this DAG, make sure you have the following:
 
 ## Workflow
 
-![Workflow](picture-flow.png)
+![Workflow](picture.png)
 
 
