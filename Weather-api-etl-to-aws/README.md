@@ -24,9 +24,15 @@ Before using this DAG, make sure you have the following:
 - API credentials for the weather data source.
 - AWS S3 credentials for uploading data.
 
-## Usage
+## Code
 
 1. Clone this repository:
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/MarcoRob97/Data-Engineering-Projects/tree/main/Weather-api-etl-to-aws)https://github.com/MarcoRob97/Data-Engineering-Projects/tree/main/Weather-api-etl-to-aws
+
+## Workflow
+
+![Workflow](picture-flow.png)
+
+
