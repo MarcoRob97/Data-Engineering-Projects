@@ -5,17 +5,16 @@
 2. Edit inbound rules of your EC2 in order to run airflow in port 8080
 
 3. Connect to your instance and Copy and Paste the next Commands:
-   {	sudo apt update
-   	sudo apt install python3-pip
-	sudo apt install python3.10-venv
-	python3 -m venv customer_churn_youtube_venv
-	source customer_churn_youtube_venv/bin/activate 
-	sudo pip install apache-airflow
-	pip install apache-airflow-providers-amazon
-	airflow standalone
-    }
-
-4. Connect via SSH from visual Studio to your EC2 instance.
+        - sudo apt update
+   	- sudo apt install python3-pip
+	- sudo apt install python3.10-venv
+	- python3 -m venv customer_churn_youtube_venv
+	- source customer_churn_youtube_venv/bin/activate 
+	- sudo pip install apache-airflow
+	- pip install apache-airflow-providers-amazon
+	- airflow standalone
+    
+5. Connect via SSH from visual Studio to your EC2 instance.
     use config SSH file on your local machine.
 
 ## In order to run airflow:
