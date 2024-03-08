@@ -9,7 +9,7 @@ ssh_hostname = '3.137.79.108'
 SSH_username = 'magnum'
 ssh_key_file = "//saturnv2/FileDump/Data/magnum_v2_ed25519.pem"
 
-mysql_hostname = 'v2-onerater-database.cluster-c5xtvyrmqz7e.us-east-2.rds.amazonaws.com'
+mysql_hostname = 'v2z7e.us-east-2.rds.amazonaws.com' # url name of Database
 mysql_server_port = 3306
 username_db = 'magnum'
 password_db = 'Pasword'
@@ -30,12 +30,12 @@ with SSHTunnelForwarder((ssh_hostname), ssh_username=SSH_username, ssh_pkey=ssh_
     db.close()
 
 # Replace these with your values from temporary credentials process
-AWS_ACCESS_KEY_ID = "AKIAUJ2BU4GPVKD3FEXR"
+AWS_ACCESS_KEY_ID = "AWS_ACCESS_KEY_ID"
 AWS_SECRET_ACCESS_KEY = "secretaccesskey"
 
 # Replace these placeholders with your actual values
 REGION_NAME = "us-east-2"  # Replace with your desired AWS region
-BUCKET_NAME = "magnum-bucket-marc"  # Replace with the name of your S3 bucket
+BUCKET_NAME = "bucket-marc"  # Replace with the name of your S3 bucket
 
 # Create a session with temporary credentials using boto3 Session object
 session = boto3.Session(
