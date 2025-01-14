@@ -1,16 +1,12 @@
-Pipeline for connecting to Azure SQL Database, mounting Azure Blob Storage, and performing data ingestion using Databricks.
+# Azure Pipeline: Bulking with Databricks
+
 ![Process Flow Diagram](AzurePipeline.png)
----
-
 ## Overview
-
 The script performs the following tasks:
 1. Establishes a JDBC connection to an Azure SQL Database.
 2. Mounts an Azure Blob Storage container to Databricks file system (DBFS).
 3. Reads a CSV file from the mounted storage.
 4. Inserts the data from the CSV file into an Azure SQL table.
-
----
 
 ## Prerequisites
 
@@ -30,8 +26,6 @@ The script performs the following tasks:
 4. **Dependencies**:
    - Databricks utilities (`dbutils`).
    - JDBC driver for SQL Server (`com.microsoft.sqlserver.jdbc.SQLServerDriver`).
-
----
 
 ## Script Details
 
