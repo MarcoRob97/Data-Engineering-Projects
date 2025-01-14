@@ -35,19 +35,19 @@ The script defines JDBC connection properties for the Azure SQL Database. These 
 ### 2. Mount Azure Blob Storage
 The script checks if the specified Azure Blob Storage container is already mounted. If not, it mounts the storage to a specified mount point in the Databricks file system (DBFS).
 
-- **Mount Point**: `/mnt/american-container`
+- **Mount Point**: `/mnt/your-container`
 - **Source**: Azure Blob Storage container.
 
 ### 3. Read CSV File
 The script reads a CSV file from the mounted storage using Spark's CSV reader.
 
-- **File Path**: `/mnt/americanagg-container/Business Conditions Major.csv`
+- **File Path**: `/mnt/your-container/filename.csv`
 - **Options**: Header row is included in the file.
 
 ### 4. Insert Data into SQL Table
 The data from the CSV file is written to a specified table in the Azure SQL Database using Spark's `write.jdbc` method.
 
-- **Target Table**: `[Business Conditions - Major]`
+- **Target Table**: `[target-table]`
 - **Write Mode**: Append (adds data to the existing table).
 
 ## Usage
