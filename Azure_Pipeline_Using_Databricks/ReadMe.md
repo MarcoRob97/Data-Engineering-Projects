@@ -56,8 +56,6 @@ The data from the CSV file is written to a specified table in the Azure SQL Data
 - **Target Table**: `[Business Conditions - Major]`
 - **Write Mode**: Append (adds data to the existing table).
 
----
-
 ## Usage
 
 1. **Configure the Script**
@@ -71,30 +69,9 @@ The data from the CSV file is written to a specified table in the Azure SQL Data
    - The script prints messages indicating the success or failure of each step.
    - Verify data ingestion by checking the target SQL table.
 
----
 
-## Error Handling
 
-### Common Errors
-1. **Authentication Failure**:
-   - Ensure the database username and password are correct.
-   - Check that the storage account key is valid.
 
-2. **File Not Found**:
-   - Verify the file path in the mounted storage.
-
-3. **Table Write Failure**:
-   - Ensure the target table exists in the database.
-   - Check for schema mismatches between the CSV and the SQL table.
-
-### Debugging
-- Error messages are printed to the console for easier debugging.
-
----
-
-## Notes
-- Avoid hardcoding sensitive information like passwords and keys. Use secure methods like Azure Key Vault for managing secrets.
-- Ensure the Spark cluster has access to the required libraries and drivers for JDBC connectivity.
 
 
 
