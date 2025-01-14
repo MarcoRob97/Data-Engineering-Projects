@@ -2,7 +2,9 @@
 
 Pipeline for connecting to Azure SQL Database, mounting Azure Blob Storage, and performing data ingestion using Databricks.
 ---
-[PipelineImage](Data-Engineering-Projects/Azure - Bulking with Databrick 1.0/Azure Pipeline.png)
+
+
+![Flow Process](/AzurePipeline.png)
 
 ## Overview
 
